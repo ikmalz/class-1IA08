@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { supabase } from '../../src/lib/supabaseClient'
+import { supabase } from '../../lib/supabaseClient'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 function Login() {
   const navigate = useNavigate()
@@ -31,12 +34,12 @@ function Login() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-100 px-4 py-8">
-      <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md items-center">
-        <div className="w-full rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+    <main className="min-h-screen bg-slate-50 px-4 py-8">
+      <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md w-full items-center">
+        <div className="w-full rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
           <div className="mb-8">
             <p className="text-sm font-semibold text-blue-600">
-              CLASS HUB
+              CLASS 1IA08
             </p>
 
             <h1 className="mt-2 text-2xl font-bold text-slate-900">
@@ -44,7 +47,7 @@ function Login() {
             </h1>
 
             <p className="mt-2 text-sm text-slate-500">
-              Masuk untuk mengelola tugas dan pengumuman kelas.
+              Masuk untuk mengelola konten website Class 1IA08.
             </p>
           </div>
 
@@ -57,14 +60,13 @@ function Login() {
                 Email
               </label>
 
-              <input
+              <Input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="admin@classhub.com"
                 required
-                className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
               />
             </div>
 
@@ -76,14 +78,13 @@ function Login() {
                 Password
               </label>
 
-              <input
+              <Input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 placeholder="Masukkan password"
                 required
-                className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
               />
             </div>
 
@@ -93,13 +94,14 @@ function Login() {
               </div>
             )}
 
-            <button
+            <Button
               type="submit"
               disabled={loading}
-              className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+              className="w-full"
+              variant="default"
             >
               {loading ? 'Memproses...' : 'Login'}
-            </button>
+            </Button>
           </form>
 
           <div className="mt-6 text-center">

@@ -1,18 +1,14 @@
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, Outlet } from 'react-router-dom'
 import { BookOpen, Menu, X } from 'lucide-react'
 import { useState } from 'react'
 
-function PublicLayout({ children }) {
+function PublicLayout() {
   const [open, setOpen] = useState(false)
 
   const navItems = [
     {
       label: 'Beranda',
       to: '/',
-    },
-    {
-      label: 'Tugas',
-      to: '/tugas',
     },
     {
       label: 'Pengumuman',
@@ -101,7 +97,7 @@ function PublicLayout({ children }) {
         )}
       </header>
 
-      {children}
+      <Outlet />
 
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto max-w-7xl px-6 py-6 text-center text-xs text-slate-400 lg:px-8">
