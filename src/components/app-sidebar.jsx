@@ -1,4 +1,13 @@
-"use client"
+import {
+  GalleryVerticalEnd,
+  LayoutDashboard,
+  Users,
+} from 'lucide-react'
+import * as React from 'react'
+import { NavMain } from '@/components/nav-main'
+import { NavUser } from '@/components/nav-user'
+import { TeamSwitcher } from '@/components/team-switcher'
+
 
 import {
   Sidebar,
@@ -6,45 +15,83 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { LayoutDashboardIcon, MegaphoneIcon, LogOutIcon, BookOpenIcon } from "lucide-react"
+} from '@/components/ui/sidebar'
+import { supabase } from '@/lib/supabaseClient'
 
-export function AppSidebar({
-  ...props
-}) {
+const data = {
+  user: {
+    name: 'Admin',
+    email: 'Class 1IA08',
+    avatar: '',
+  },
+
+  teams: [
+    {
+      name: 'Class 1IA08',
+      logo: GalleryVerticalEnd,
+      plan: 'Admin',
+    },
+  ],
+
+  navMain: [
+    {
+      title: 'Dashboard',
+      url: '/admin',
+      icon: LayoutDashboard,
+    },
+    {
+      title: 'Manajemen',
+      url: '#',
+      icon: Users,
+      items: [
+        {
+          title: 'Pengumuman',
+          url: '/admin/pengumuman',
+        },
+        {
+          title: 'Anggota Kelas',
+          url: '/admin/anggota',
+        },
+      ],
+    },
+  ],
+
+  projects: [],
+}
+
+export function AppSidebar(props) {
+  const [user, setUser] = React.useState({
+    name: 'Admin',
+    email: 'Class 1IA08',
+    avatar: '',
+  })
+
+  React.useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user: authUser } }) => {
+      if (authUser) {
+        setUser({
+          name: authUser.user_metadata?.name || 'Admin',
+          email: authUser.email || 'Class 1IA08',
+          avatar: authUser.user_metadata?.avatar_url || '',
+        })
+      }
+    })
+  }, [])
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <div className="flex items-center gap-3 p-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-600 text-white">
-            <BookOpenIcon size={18} />
-          </div>
-          <div>
-            <p className="text-sm font-medium text-slate-900">Class 1IA08</p>
-            <p className="text-xs text-slate-500">Admin Dashboard</p>
-          </div>
-        </div>
+        <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
+
       <SidebarContent>
-        <div className="space-y-2 px-2">
-          <div className="flex items-center gap-2 px-2 py-2 text-sm font-medium rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
-            <LayoutDashboardIcon className="h-4 w-4" />
-            <span>Overview</span>
-          </div>
-          <div className="flex items-center gap-2 px-2 py-2 text-sm font-medium rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
-            <MegaphoneIcon className="h-4 w-4" />
-            <span>Pengumuman</span>
-          </div>
-        </div>
+        <NavMain items={data.navMain} />
       </SidebarContent>
+
       <SidebarFooter>
-        <div className="mt-4 pt-4 border-t border-slate-200 px-2">
-          <div className="flex items-center gap-2 px-2 py-2 text-sm font-medium rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
-            <LogOutIcon className="h-4 w-4" />
-            <span>Logout</span>
-          </div>
-        </div>
+        <NavUser user={user} />
       </SidebarFooter>
+
       <SidebarRail />
     </Sidebar>
   )
