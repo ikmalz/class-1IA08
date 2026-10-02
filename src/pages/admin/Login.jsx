@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabaseClient'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
 
 function Login() {
   const navigate = useNavigate()
@@ -18,12 +19,12 @@ function Login() {
     setLoading(true)
     setError('')
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error: authError } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
 
-    if (error) {
+    if (authError) {
       setError('Email atau password tidak sesuai.')
       setLoading(false)
       return
@@ -33,49 +34,44 @@ function Login() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-8">
-      <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md w-full items-center">
-        <div className="w-full rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+    <main className="min-h-screen bg-background text-foreground px-4 py-8 flex items-center justify-center">
+      <div className="w-full max-w-md">
+        <div className="w-full rounded-xl border border-border bg-card text-card-foreground p-6 shadow-sm sm:p-8">
           <div className="mb-8">
-            <p className="text-sm font-semibold text-blue-600">
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary">
               CLASS 1IA08
             </p>
 
-            <h1 className="mt-2 text-2xl font-bold text-slate-900">
+            <h1 className="mt-2 text-2xl font-bold tracking-tight text-foreground">
               Login Admin
             </h1>
 
-            <p className="mt-2 text-sm text-slate-500">
-              Masuk untuk mengelola konten website Class 1IA08.
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+              Masuk untuk mengelola konten dan aktivitas akademik Class 1IA08.
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
-              <label
-                htmlFor="email"
-                className="mb-2 block text-sm font-medium text-slate-700"
-              >
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">
                 Email
-              </label>
+              </Label>
 
               <Input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                placeholder="admin@classhub.com"
+                placeholder="admin@class1ia08.ac.id"
+                autoComplete="email"
                 required
               />
             </div>
 
-            <div>
-              <label
-                htmlFor="password"
-                className="mb-2 block text-sm font-medium text-slate-700"
-              >
+            <div className="space-y-2">
+              <Label htmlFor="password">
                 Password
-              </label>
+              </Label>
 
               <Input
                 id="password"
@@ -83,12 +79,13 @@ function Login() {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 placeholder="Masukkan password"
+                autoComplete="current-password"
                 required
               />
             </div>
 
             {error && (
-              <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+              <div className="rounded-lg border border-destructive/20 bg-destructive/10 px-4 py-3 text-xs sm:text-sm font-medium text-destructive">
                 {error}
               </div>
             )}
@@ -96,19 +93,19 @@ function Login() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full"
+              className="w-full mt-2"
               variant="default"
             >
-              {loading ? 'Memproses...' : 'Login'}
+              {loading ? 'Memproses...' : 'Masuk'}
             </Button>
           </form>
 
           <div className="mt-6 text-center">
             <Link
               to="/"
-              className="text-sm font-medium text-slate-500 hover:text-slate-900"
+              className="text-xs sm:text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
-              ← Kembali ke Class Hub
+              ← Kembali ke Website
             </Link>
           </div>
         </div>

@@ -1,107 +1,299 @@
 import { Link, NavLink, Outlet } from 'react-router-dom'
-import { BookOpen, Menu, X } from 'lucide-react'
-import { useState } from 'react'
+import { Menu, Sun, Moon, ArrowUp } from 'lucide-react'
+import { useState, useEffect, useCallback } from 'react'
+import { useTheme } from '../hooks/useTheme'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet'
+
+const navItems = [
+  { label: 'Beranda', to: '/' },
+  { label: 'Pengumuman', to: '/pengumuman' },
+  { label: 'Tugas', to: '/tugas' },
+  { label: 'Mata Kuliah', to: '/mata-kuliah' },
+]
 
 function PublicLayout() {
-  const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const { theme, toggleTheme } = useTheme()
 
-  const navItems = [
-    {
-      label: 'Beranda',
-      to: '/',
-    },
-    {
-      label: 'Pengumuman',
-      to: '/pengumuman',
-    },
-  ]
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const handleMobileNav = useCallback(() => {
+    setMobileOpen(false)
+  }, [])
+
+  const scrollToTop = useCallback(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({
+      top: 0,
+      behavior: prefersReduced ? 'auto' : 'smooth',
+    })
+  }, [])
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
-
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundColor: 'var(--public-bg-primary)',
+        color: 'var(--public-text-primary)',
+      }}
+    >
+      {/* ── Navbar ────────────────────────────────────────────── */}
+      <header
+        className="fixed top-0 right-0 left-0 z-50 transition-all duration-300"
+        style={{
+          backgroundColor: scrolled ? 'var(--public-nav-bg)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(12px)' : 'none',
+          WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
+          borderBottom: scrolled
+            ? '1px solid var(--public-border)'
+            : '1px solid transparent',
+        }}
+      >
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          {/* Brand */}
           <Link
             to="/"
-            className="flex items-center gap-2.5"
+            className="flex items-baseline gap-0 transition-opacity duration-200 hover:opacity-80"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white">
-              <BookOpen size={19} />
-            </div>
-
-            <div>
-              <p className="text-sm font-bold leading-none text-slate-900">
-                Class Hub
-              </p>
-
-              <p className="mt-1 text-[10px] font-medium uppercase tracking-wider text-slate-400">
-                Class Information
-              </p>
-            </div>
+            <span
+              className="text-lg font-bold tracking-tight"
+              style={{ color: 'var(--public-text-primary)' }}
+            >
+              1IA08
+            </span>
+            <span
+              className="text-lg font-bold"
+              style={{ color: 'var(--public-accent)' }}
+            >
+              .
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav
+            className="hidden items-center gap-1 md:flex"
+            aria-label="Navigasi utama"
+          >
             {navItems.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
                 end={item.to === '/'}
                 className={({ isActive }) =>
-                  `rounded-lg px-4 py-2 text-sm font-medium transition ${
+                  [
+                    'relative px-3 py-2 text-sm font-medium transition-colors duration-200',
                     isActive
-                      ? 'bg-blue-50 text-blue-700'
-                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                  }`
+                      ? ''
+                      : 'hover:opacity-80',
+                  ].join(' ')
                 }
+                style={({ isActive }) => ({
+                  color: isActive
+                    ? 'var(--public-accent)'
+                    : 'var(--public-text-muted)',
+                })}
               >
-                {item.label}
+                {({ isActive }) => (
+                  <>
+                    {item.label}
+                    {isActive && (
+                      <span
+                        className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full"
+                        style={{ backgroundColor: 'var(--public-accent)' }}
+                        aria-hidden="true"
+                      />
+                    )}
+                  </>
+                )}
               </NavLink>
             ))}
+
+            {/* Theme Toggle (Desktop) */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="ml-4 flex h-8 w-8 items-center justify-center rounded-md transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2"
+              style={{
+                color: 'var(--public-text-muted)',
+                borderColor: 'var(--public-border)',
+              }}
+              aria-label={
+                theme === 'dark'
+                  ? 'Aktifkan mode terang'
+                  : 'Aktifkan mode gelap'
+              }
+            >
+              {theme === 'dark' ? (
+                <Sun className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Moon className="h-4 w-4" aria-hidden="true" />
+              )}
+            </button>
           </nav>
 
-          {/* Mobile Button */}
-          <button
-            type="button"
-            onClick={() => setOpen(!open)}
-            className="rounded-lg p-2 text-slate-600 hover:bg-slate-100 md:hidden"
-            aria-label="Toggle navigation"
-          >
-            {open ? <X size={21} /> : <Menu size={21} />}
-          </button>
-        </div>
+          {/* Mobile Controls */}
+          <div className="flex items-center gap-2 md:hidden">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="flex h-9 w-9 items-center justify-center rounded-md transition-colors duration-200"
+              style={{ color: 'var(--public-text-muted)' }}
+              aria-label={
+                theme === 'dark'
+                  ? 'Aktifkan mode terang'
+                  : 'Aktifkan mode gelap'
+              }
+            >
+              {theme === 'dark' ? (
+                <Sun className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Moon className="h-4 w-4" aria-hidden="true" />
+              )}
+            </button>
 
-        {/* Mobile Navigation */}
-        {open && (
-          <div className="border-t border-slate-100 px-6 py-3 md:hidden">
-            <nav className="flex flex-col gap-1">
-              {navItems.map((item) => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  end={item.to === '/'}
-                  onClick={() => setOpen(false)}
-                  className={({ isActive }) =>
-                    `rounded-lg px-4 py-3 text-sm font-medium ${
-                      isActive
-                        ? 'bg-blue-50 text-blue-700'
-                        : 'text-slate-600 hover:bg-slate-50'
-                    }`
-                  }
+            <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+              <SheetTrigger asChild>
+                <button
+                  type="button"
+                  className="flex h-9 w-9 items-center justify-center rounded-md transition-colors duration-200"
+                  style={{ color: 'var(--public-text-muted)' }}
+                  aria-label="Buka menu navigasi"
                 >
-                  {item.label}
-                </NavLink>
-              ))}
-            </nav>
+                  <Menu className="h-5 w-5" aria-hidden="true" />
+                </button>
+              </SheetTrigger>
+
+              <SheetContent
+                side="right"
+                className="w-72 border-l"
+                style={{
+                  backgroundColor: 'var(--public-bg-secondary)',
+                  borderColor: 'var(--public-border)',
+                }}
+              >
+                <SheetHeader>
+                  <SheetTitle
+                    className="text-left text-base font-bold"
+                    style={{ color: 'var(--public-text-primary)' }}
+                  >
+                    <span>1IA08</span>
+                    <span style={{ color: 'var(--public-accent)' }}>.</span>
+                  </SheetTitle>
+                </SheetHeader>
+
+                <nav
+                  className="mt-6 flex flex-col gap-1"
+                  aria-label="Navigasi mobile"
+                >
+                  {navItems.map((item) => (
+                    <NavLink
+                      key={item.to}
+                      to={item.to}
+                      end={item.to === '/'}
+                      onClick={handleMobileNav}
+                      className="rounded-md px-3 py-3 text-sm font-medium transition-colors duration-150"
+                      style={({ isActive }) => ({
+                        color: isActive
+                          ? 'var(--public-accent)'
+                          : 'var(--public-text-secondary)',
+                        backgroundColor: isActive
+                          ? 'var(--public-accent-soft)'
+                          : 'transparent',
+                      })}
+                    >
+                      {item.label}
+                    </NavLink>
+                  ))}
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
-        )}
+        </div>
       </header>
 
+      {/* ── Page Content ──────────────────────────────────────── */}
       <Outlet />
 
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-6 text-center text-xs text-slate-400 lg:px-8">
-          © 2026 Class Hub. Informasi kelas dalam satu tempat.
+      {/* ── Footer ────────────────────────────────────────────── */}
+      <footer
+        className="border-t py-12 sm:py-16"
+        style={{
+          backgroundColor: 'var(--public-bg-secondary)',
+          borderColor: 'var(--public-border-subtle, var(--public-border))',
+        }}
+      >
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+            {/* Brand + Tagline */}
+            <div className="space-y-2">
+              <Link
+                to="/"
+                className="inline-flex items-baseline gap-0 text-lg font-bold tracking-tight transition-opacity duration-200 hover:opacity-80"
+                style={{ color: 'var(--public-text-primary)' }}
+              >
+                <span>1IA08</span>
+                <span style={{ color: 'var(--public-accent)' }}>.</span>
+              </Link>
+              <p
+                className="max-w-xs text-xs sm:text-sm leading-relaxed"
+                style={{ color: 'var(--public-text-secondary)' }}
+              >
+                Ruang informasi bersama untuk Class 1IA08. Pengumuman, tugas, dan materi kelas dalam satu tempat.
+              </p>
+            </div>
+
+            {/* Navigation links & Back to Top */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10">
+              <nav aria-label="Navigasi footer" className="flex flex-wrap gap-4 sm:gap-6">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className="text-xs font-medium uppercase tracking-wider transition-colors duration-150 hover:opacity-80 focus-visible:outline-none focus-visible:underline"
+                    style={{ color: 'var(--public-text-secondary)' }}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+
+              <button
+                type="button"
+                onClick={scrollToTop}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider transition-colors duration-150 hover:opacity-80 focus-visible:outline-none focus-visible:underline self-start sm:self-auto cursor-pointer"
+                style={{ color: 'var(--public-accent)' }}
+                aria-label="Kembali ke atas halaman"
+              >
+                <span>Kembali ke Atas</span>
+                <ArrowUp className="h-3.5 w-3.5" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+
+          {/* Bottom Copyright Row */}
+          <div
+            className="mt-10 pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-3 text-xs"
+            style={{
+              borderColor: 'var(--public-border-subtle, var(--public-border))',
+              color: 'var(--public-text-muted)',
+            }}
+          >
+            <p>© {new Date().getFullYear()} Class 1IA08. Seluruh hak cipta dilindungi.</p>
+            <p className="font-mono text-[11px] uppercase tracking-wider">Kelas 1IA08 • Akademik</p>
+          </div>
         </div>
       </footer>
     </div>
