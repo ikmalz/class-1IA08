@@ -176,7 +176,7 @@ function PublicLayout() {
                   type="button"
                   className="flex h-9 w-9 items-center justify-center rounded-full text-white shadow-sm transition-transform duration-200 active:scale-95"
                   style={{ backgroundColor: "var(--public-accent)" }}
-                  aria-label="Buka menu navigasi"
+                  aria-label="Buka menu naviagasi"
                 >
                   <Menu className="h-5 w-5" aria-hidden="true" />
                 </button>
