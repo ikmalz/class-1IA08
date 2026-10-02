@@ -4,7 +4,7 @@ function Announcements() {
       <div className="mx-auto max-w-5xl px-6 py-10 lg:px-8">
 
         <p className="text-sm font-semibold text-blue-600">
-          CLASS HUB
+          CLASS 1IA08
         </p>
 
         <h1 className="mt-2 text-3xl font-bold text-slate-900">
@@ -21,12 +21,12 @@ function Announcements() {
           </p>
 
           <h2 className="mt-2 text-lg font-bold text-slate-900">
-            Selamat datang di Class Hub
+            Selamat datang di Website Kelas 1IA08
           </h2>
 
           <p className="mt-3 leading-7 text-slate-600">
             Website ini digunakan untuk memudahkan seluruh anggota kelas
-            melihat tugas dan informasi terbaru.
+            melihat informasi dan pengumuman terbaru.
           </p>
         </div>
 
