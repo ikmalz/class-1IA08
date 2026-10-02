@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 import { ArrowLeft, RotateCcw } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { useAnnouncements } from '../../hooks/useAnnouncements'
-import { AnnouncementPageRow } from '../../components/public/AnnouncementPageRow'
-import { AnnouncementPageSkeleton } from '../../components/public/AnnouncementSkeletons'
+import { useCourses } from '../../hooks/useCourses'
+import { CourseRow } from '../../components/public/CourseRow'
+import { CourseSkeletonList } from '../../components/public/CourseSkeletons'
 
 const headerVariants = {
   hidden: { opacity: 0, y: 16 },
@@ -22,8 +22,8 @@ const headerVariantsReduced = {
   show: { opacity: 1, y: 0 },
 }
 
-function Announcements() {
-  const { data: announcements, loading, error, refetch } = useAnnouncements()
+function Courses() {
+  const { data: courses, loading, error, refetch } = useCourses()
   const prefersReduced = useReducedMotion()
   const variants = prefersReduced ? headerVariantsReduced : headerVariants
 
@@ -50,31 +50,31 @@ function Announcements() {
           variants={variants}
           initial="hidden"
           animate="show"
-          className="mb-12 border-b pb-8 sm:mb-16 sm:pb-12"
-          style={{ borderColor: 'var(--public-border-subtle)' }}
+          className="mb-8 border-b pb-8 sm:mb-12 sm:pb-10"
+          style={{ borderColor: 'var(--public-border-subtle, var(--public-border))' }}
         >
           <p
             className="text-xs font-semibold uppercase tracking-[0.25em]"
             style={{ color: 'var(--public-accent)' }}
           >
-            01 / ANNOUNCEMENTS
+            03 / COURSES
           </p>
           <h1
             className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl"
             style={{ color: 'var(--public-text-primary)' }}
           >
-            PENGUMUMAN KELAS
+            MATA KULIAH
           </h1>
           <p
             className="mt-3 text-sm sm:text-base"
             style={{ color: 'var(--public-text-secondary)' }}
           >
-            Semua informasi dan update terbaru untuk Class 1IA08.
+            Daftar mata kuliah aktif Class 1IA08.
           </p>
         </motion.header>
 
         {/* Content States */}
-        {loading && <AnnouncementPageSkeleton count={4} />}
+        {loading && <CourseSkeletonList count={6} />}
 
         {!loading && error && (
           <div
@@ -85,13 +85,13 @@ function Announcements() {
               className="text-base font-medium"
               style={{ color: 'var(--public-text-primary)' }}
             >
-              Pengumuman belum dapat dimuat.
+              Mata kuliah belum dapat dimuat.
             </p>
             <p
               className="mt-1 text-sm"
               style={{ color: 'var(--public-text-muted)' }}
             >
-              Silakan coba lagi beberapa saat lagi.
+              Silakan coba lagi.
             </p>
             <button
               type="button"
@@ -108,7 +108,7 @@ function Announcements() {
           </div>
         )}
 
-        {!loading && !error && (!announcements || announcements.length === 0) && (
+        {!loading && !error && (!courses || courses.length === 0) && (
           <div
             className="py-16 text-center rounded-lg border border-dashed"
             style={{ borderColor: 'var(--public-border)' }}
@@ -117,28 +117,28 @@ function Announcements() {
               className="text-base font-medium"
               style={{ color: 'var(--public-text-primary)' }}
             >
-              Belum ada pengumuman yang dipublikasikan.
+              Belum ada mata kuliah aktif.
             </p>
             <p
               className="mt-1 text-sm"
               style={{ color: 'var(--public-text-muted)' }}
             >
-              Semua pengumuman baru akan tercantum di arsip ini.
+              Mata kuliah baru yang terdaftar akan muncul di sini.
             </p>
           </div>
         )}
 
-        {!loading && !error && announcements && announcements.length > 0 && (
+        {!loading && !error && courses && courses.length > 0 && (
           <div
             className="divide-y"
-            style={{ borderColor: 'var(--public-border-subtle)' }}
+            style={{ borderColor: 'var(--public-border-subtle, var(--public-border))' }}
           >
-            {announcements.map((item, index) => (
+            {courses.map((course, index) => (
               <div
-                key={item.id}
-                style={{ borderColor: 'var(--public-border-subtle)' }}
+                key={course.id}
+                style={{ borderColor: 'var(--public-border-subtle, var(--public-border))' }}
               >
-                <AnnouncementPageRow announcement={item} index={index} />
+                <CourseRow course={course} index={index} />
               </div>
             ))}
           </div>
@@ -148,4 +148,4 @@ function Announcements() {
   )
 }
 
-export default Announcements
+export default Courses
