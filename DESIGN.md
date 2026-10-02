@@ -1,161 +1,135 @@
-# DESIGN.md — Class 1IA08
+# DESIGN.md — Class 1IA08 Interactive Class Website
 
 ## 1. Project Identity
 
-**Class 1IA08** adalah website kelas untuk mahasiswa.
+**Class 1IA08** adalah website resmi kelas untuk mahasiswa.
 
-Website ini berfungsi sebagai pusat informasi kelas yang mudah diakses oleh mahasiswa, bukan sebagai aplikasi task management atau project management.
+Website ini berfungsi sebagai pusat informasi kelas yang mudah diakses oleh mahasiswa, dosen, dan anggota kelas.
 
-Website terdiri dari dua area utama:
+Website memiliki dua area utama:
 
 1. **Public Class Website**
-   - dapat diakses mahasiswa/pengunjung
-   - menampilkan informasi kelas
-   - fokus pada informasi, identitas, dan aktivitas kelas
+   - halaman utama kelas
+   - pengumuman
+   - informasi tugas
+   - informasi mata kuliah
+   - dokumentasi/foto tugas bila relevan
+   - informasi kelas lain yang benar-benar tersedia
 
 2. **Admin Dashboard**
-   - hanya dapat diakses admin
-   - digunakan untuk mengelola konten website
-   - menggunakan **shadcn/ui** sebagai UI foundation utama
+   - hanya untuk admin
+   - mengelola pengumuman
+   - mengelola mata kuliah
+   - mengelola tugas
+   - mengelola foto/attachment tugas
+   - mengelola data yang memang tersedia di Supabase
 
-Tidak ada sistem:
-
-- task assignment
-- assign task ke mahasiswa
-- task management
-- kanban
-- project management
+Website ini **bukan**:
+- LMS
+- project management app
+- task assignment app
 - student dashboard
+- SaaS dashboard
+- portfolio pribadi
 
 ---
 
 # 2. Product Direction
 
-Website harus terasa seperti:
+Arah utama:
 
-> Website resmi kelas mahasiswa yang modern, rapi, ramah, dan mudah digunakan.
+> **Interactive Dark Class Website**
 
-Bukan seperti:
+Public website harus terasa seperti:
+- modern
+- dark-first
+- akademik
+- youthful
+- organized
+- interactive
+- community-oriented
+- clean
+- premium
+- mudah digunakan
 
-> SaaS dashboard, project management app, LMS, atau template AI generik.
+Admin dashboard harus terasa:
+- jelas
+- efisien
+- utilitarian
+- konsisten
+- ringan
+- mudah dipahami
 
-Prioritas utama:
+Prioritas desain:
 
-**Clarity > Usability > Accessibility > Visual Polish > Decoration**
+**Clarity > Usability > Accessibility > Content > Visual Polish > Motion > Decoration**
 
 ---
 
-# 3. Design Personality
+# 3. Visual Personality
 
-Desain harus terasa:
+Public website:
 
-- Modern
-- Academic
-- Friendly
-- Organized
-- Youthful
-- Calm
-- Reliable
-- Community-oriented
+- dark
+- editorial
+- modern
+- technical
+- calm
+- interactive
+- youthful
 
-Hindari tampilan yang:
+Admin dashboard:
 
-- terlalu corporate
-- terlalu formal
-- seperti dashboard startup
-- seperti template admin gratis
-- terlalu futuristik
-- terlalu banyak dekorasi
-- terlihat AI-generated
+- neutral
+- functional
+- compact
+- structured
+- shadcn-first
+
+Hindari:
+- tampilan AI generik
+- terlalu banyak card
+- terlalu banyak rounded pill
+- gradient dekoratif berlebihan
+- glassmorphism berlebihan
+- glow berlebihan
+- headline terlalu besar
+- shadow berat
+- dekorasi tanpa fungsi
+- fake statistics
+- fake testimonials
+- fake class achievements
+- elemen melayang random
+- animasi di setiap elemen
 
 ---
 
 # 4. Anti-Slop Rules
 
-Project menggunakan Anti-Slop.
-
 Sebelum mengerjakan frontend:
 
-1. Baca `AGENTS.md`.
-2. Baca `DESIGN.md`.
-3. Terapkan Anti-Slop **during the work**.
-4. Load hanya skill yang relevan dengan task.
-5. Jangan load semua skill tanpa kebutuhan.
+1. Baca `AGENTS.md`
+2. Baca `DESIGN.md`
+3. Gunakan skill Anti-Slop yang relevan saja
+4. Jangan load semua skill tanpa kebutuhan
+5. Prioritaskan struktur dan hierarchy daripada dekorasi
 
-Untuk frontend:
+Skill yang relevan:
+- `antislop`
+- `antislop-ui`
+- `antislop-layoutmobile`
+- `antislop-copywriting`
+- `antislop-human`
+- `antislop-code`
 
-- `antislop` → core rules
-- `antislop-ui` → UI dan visual
-- `antislop-layoutmobile` → responsive/mobile
-- `antislop-copywriting` → teks UI
-- `antislop-human` → konten tentang orang
-- `antislop-code` → code comments jika diperlukan
-
-Hindari pola AI UI seperti:
-
-- terlalu banyak rounded cards
-- gradient dekoratif tanpa fungsi
-- glowing backgrounds
-- glassmorphism berlebihan
-- blob dekoratif
-- headline hero terlalu besar
-- semua elemen berbentuk pill
-- shadow berlebihan
-- setiap section dibungkus card
-- statistik palsu
-- testimonial palsu
-- generic feature grid
-- random floating elements
-- animasi berlebihan
-- copywriting ala startup
-
-Setiap elemen harus memiliki fungsi.
+Jika sebuah elemen tidak membantu user memahami atau menggunakan website:
+**jangan tambahkan.**
 
 ---
 
-# 5. Application Areas
+# 5. Current Technology
 
-## Public Website
-
-Public website merupakan wajah utama Class 1IA08.
-
-Public website tidak boleh terasa seperti dashboard.
-
-Gunakan layout website biasa dengan:
-
-- navbar
-- main content
-- section
-- footer
-
-Gunakan whitespace, typography, separator, dan hierarchy sebelum menggunakan card.
-
-## Admin Dashboard
-
-Admin dashboard merupakan aplikasi internal.
-
-Dashboard digunakan untuk mengelola konten website Class 1IA08.
-
-Area ini boleh menggunakan pola dashboard seperti:
-
-- sidebar
-- header
-- data table
-- form
-- dialog
-- dropdown
-- tabs
-- pagination
-- toast
-- confirmation dialog
-
-Untuk dashboard admin, **gunakan shadcn/ui sebagai UI foundation**.
-
----
-
-# 6. Technology Direction
-
-Frontend stack saat ini:
+Stack project:
 
 ```text
 React
@@ -164,102 +138,1251 @@ Tailwind CSS v4
 React Router
 Lucide React
 Supabase
-```
-
-Untuk **Admin Dashboard**, gunakan:
-
-```text
 shadcn/ui
-Tailwind CSS
-Lucide React
 ```
 
-Jangan menambahkan UI framework lain seperti:
+Untuk motion public website:
 
+```text
+Framer Motion
+```
+
+boleh ditambahkan jika memang digunakan.
+
+ReactBits boleh digunakan secara selektif.
+
+Jangan migrasi ke:
+- Next.js
 - Material UI
-- Ant Design
-- Chakra UI
 - Bootstrap
-
-kecuali ada kebutuhan yang benar-benar tidak dapat diselesaikan menggunakan stack saat ini.
-
----
-
-# 7. shadcn/ui Rules
-
-shadcn/ui terutama digunakan untuk **Admin Dashboard**.
-
-Gunakan komponen shadcn jika sudah tersedia sebelum membuat custom implementation.
-
-Contoh:
-
-```text
-Button
-Input
-Textarea
-Label
-Card
-Table
-Dialog
-AlertDialog
-DropdownMenu
-Select
-Tabs
-Badge
-Sheet
-Tooltip
-Skeleton
-Separator
-Breadcrumb
-Pagination
-Sidebar
-```
-
-Custom component boleh dibuat untuk kebutuhan domain-specific.
-
-Contoh:
-
-```text
-AnnouncementTable
-MemberTable
-AdminPageHeader
-ContentStatusBadge
-```
-
-Jangan membuat ulang komponen dasar yang sebenarnya sudah tersedia di shadcn/ui.
+- Chakra UI
+- Ant Design
 
 ---
 
-# 8. Admin Sidebar
+# 6. Public vs Admin Design
 
-Admin dashboard menggunakan sidebar berbasis **shadcn/ui Sidebar**.
+## Public Website
 
-Struktur dasar:
+Public website boleh menggunakan:
+- strong typography
+- subtle interactive background
+- scroll reveal
+- section numbering
+- responsive editorial layout
+- subtle hover interaction
+- dark/light theme
+- controlled motion
+
+Public website tidak boleh terasa seperti admin dashboard.
+
+Gunakan:
+- navbar
+- hero
+- section
+- divider
+- editorial list
+- footer
+
+Sebelum memakai card, pertimbangkan apakah spacing + border + separator sudah cukup.
+
+## Admin Dashboard
+
+Admin dashboard menggunakan:
+- shadcn/ui
+- sidebar
+- table
+- form
+- dialog
+- dropdown
+- badge
+- pagination
+- skeleton
+- toast
+
+Admin tidak membutuhkan:
+- ReactBits background
+- large cinematic hero
+- scroll storytelling
+- animated canvas
+- 3D effect
+
+---
+
+# 7. Color System
+
+## Dark Theme
 
 ```text
-Admin Dashboard
-│
-├── Overview
-├── Content Management
-│   └── sesuai fitur website
-├── Members
-├── Settings
-└── Logout
+Background Primary   #080B12
+Background Secondary #0D111B
+Surface              #121826
+Surface Hover        #182033
+
+Text Primary         #F8FAFC
+Text Secondary       #A8B3C7
+Text Muted           #6F7B91
+
+Border               #243047
+Border Strong        #334155
+
+Primary Accent       #3B82F6
+Primary Hover        #2563EB
+Primary Soft         #172554
+
+Info                 #38BDF8
+Success              #22C55E
+Warning              #F59E0B
+Error                #EF4444
 ```
 
-Menu final harus mengikuti fitur yang benar-benar tersedia.
+## Light Theme
+
+```text
+Background Primary   #F7F9FC
+Background Secondary #EEF3F9
+Surface              #FFFFFF
+Surface Hover        #F1F5F9
+
+Text Primary         #0F172A
+Text Secondary       #475569
+Text Muted           #64748B
+
+Border               #D7E0EA
+Border Strong        #CBD5E1
+
+Primary Accent       #2563EB
+Primary Hover        #1D4ED8
+Primary Soft         #EFF6FF
+
+Info                 #0284C7
+Success              #16A34A
+Warning              #D97706
+Error                #DC2626
+```
+
+**Jangan gunakan kuning sebagai warna identitas utama.**
+
+Semantic yellow/amber hanya boleh dipakai untuk status warning bila memang dibutuhkan.
+
+---
+
+# 8. Theme Tokens
+
+Jangan hardcode warna theme di setiap component.
+
+Gunakan semantic CSS variables:
+
+```css
+--bg-primary
+--bg-secondary
+--surface
+--surface-hover
+
+--text-primary
+--text-secondary
+--text-muted
+
+--border
+--border-strong
+
+--accent
+--accent-hover
+--accent-soft
+
+--success
+--warning
+--error
+--info
+```
+
+Dark dan light harus memiliki layout yang sama.
+
+Yang berubah hanya visual token.
+
+---
+
+# 9. Theme Behavior
+
+Public website dark-first.
+
+Theme toggle tersedia di navbar.
+
+Theme preference harus tersimpan.
+
+Expected:
+
+```text
+dark
+→ switch
+→ light
+→ refresh
+→ tetap light
+```
+
+Boleh menggunakan:
+- `localStorage`
+- `prefers-color-scheme`
+
+Jangan membuat light mode kembali ke tampilan biru-putih generik lama.
+
+Light mode harus tetap terasa modern dan editorial.
+
+---
+
+# 10. Typography
+
+Gunakan font existing project:
+
+```text
+Geist
+```
+
+Typography harus:
+- kuat
+- mudah dibaca
+- modern
+- tidak oversized
+
+Gunakan monospace hanya untuk:
+- metadata
+- tanggal
+- kode mata kuliah
+- section label
+- small technical labels
+
+Jangan gunakan monospace untuk paragraph panjang.
+
+---
+
+# 11. Typography Hierarchy
+
+Hero title:
+
+```text
+clamp(3rem, 7vw, 7rem)
+```
+
+Section heading:
+
+```text
+text-4xl md:text-5xl lg:text-6xl
+font-semibold / font-bold
+```
+
+Subheading:
+
+```text
+text-xl md:text-2xl
+```
+
+Body:
+
+```text
+text-base md:text-lg
+leading-relaxed
+```
+
+Metadata:
+
+```text
+text-xs / text-sm
+text-muted
+```
+
+---
+
+# 12. Public Layout Container
+
+Standard:
+
+```text
+max-w-7xl
+mx-auto
+px-4
+sm:px-6
+lg:px-8
+```
+
+Text-heavy content:
+
+```text
+max-w-3xl
+```
+
+Large visual content:
+
+```text
+max-w-[1400px]
+```
+
+hanya jika diperlukan.
+
+Semua section utama harus terasa align secara horizontal.
+
+---
+
+# 13. Public Navbar
+
+Navbar harus:
+- sticky/fixed
+- minimal
+- dark/light aware
+- responsive
+- compact
+- active state jelas
+- tidak terlalu dominan
+
+Desktop concept:
+
+```text
+1IA08.
+
+HOME
+PENGUMUMAN
+TUGAS
+MATA KULIAH
+
+theme toggle
+```
+
+Gunakan hanya route/fitur yang benar-benar ada.
 
 Jangan membuat menu dummy.
 
-Sidebar harus:
+Saat di top:
+- background dapat transparent
 
-- responsive
-- dapat collapse jika diperlukan
-- memiliki active state yang jelas
-- bekerja dengan keyboard
-- menggunakan Lucide icons
-- tidak menutupi content
-- menggunakan layout shadcn yang benar
+Saat scroll:
+- background semi-opaque
+- subtle blur
+- thin border-bottom
+
+---
+
+# 14. Navbar Brand
+
+Brand utama:
+
+```text
+1IA08.
+```
+
+atau:
+
+```text
+CLASS 1IA08.
+```
+
+Gunakan blue accent pada dot/small highlight bila perlu.
+
+Jangan jadikan "Class Hub" sebagai identitas utama jika nama kelas dapat digunakan langsung.
+
+---
+
+# 15. Mobile Navigation
+
+Mobile:
+- accessible menu
+- tidak overflow
+- z-index aman
+- menutup setelah route dipilih
+- dark/light aware
+- keyboard friendly
+
+Boleh gunakan shadcn `Sheet` bila cocok.
+
+---
+
+# 16. Homepage Structure
+
+Struktur yang disarankan:
+
+```text
+Navbar
+
+Hero
+
+01 / Latest Announcements
+
+02 / Latest Assignments
+
+03 / Class Information
+
+04 / Courses / Mata Kuliah
+
+Optional real content section
+
+Footer
+```
+
+Hanya tampilkan section jika data nyata tersedia.
+
+Jangan menambahkan Members/Gallery/Activities bila backend dan data belum ada.
+
+---
+
+# 17. Hero
+
+Hero harus menjawab:
+- ini website kelas apa?
+- informasi apa yang tersedia?
+- user harus mulai dari mana?
+
+Concept:
+
+```text
+CLASS 1IA08
+
+ONE PLACE FOR
+OUR CLASS.
+
+Pengumuman, tugas, dan informasi mata kuliah
+dalam satu tempat.
+
+[ LIHAT PENGUMUMAN ]
+[ LIHAT TUGAS ]
+
+SCROLL ↓
+```
+
+Copy final boleh disesuaikan.
+
+Jangan gunakan startup-style marketing copy.
+
+---
+
+# 18. Hero Background
+
+Gunakan maksimal SATU ReactBits background.
+
+Preferred:
+- Threads
+atau
+- Dot Grid
+
+Background harus:
+- subtle
+- low contrast
+- tidak mengganggu teks
+- tidak menghalangi button
+- ringan di mobile
+- respect reduced motion
+
+Accent background menggunakan:
+- blue
+- cyan
+- muted white/gray
+
+**Jangan gunakan yellow accent.**
+
+---
+
+# 19. Hero Motion
+
+Gunakan Framer Motion secara halus.
+
+Entrance:
+1. class label
+2. headline
+3. supporting text
+4. CTA
+5. scroll indicator
+
+On scroll:
+- slight scale down
+- slight fade
+- subtle vertical motion
+
+Hindari extreme zoom.
+
+---
+
+# 20. Section Numbering
+
+Gunakan numbering kecil seperti:
+
+```text
+01 / LATEST UPDATES
+02 / ASSIGNMENTS
+03 / CLASS INFO
+04 / COURSES
+```
+
+Hero tidak perlu nomor.
+
+Gunakan blue accent untuk section number.
+
+---
+
+# 21. Latest Announcements
+
+Sumber data:
+
+```text
+public.pengumuman
+```
+
+Tampilan public harus editorial, bukan card grid berat.
+
+Recommended:
+
+```text
+01
+02 OCT 2026
+
+JUDUL PENGUMUMAN
+
+Ringkasan isi pengumuman...
+
+READ MORE →
+```
+
+Gunakan:
+- divider
+- tanggal
+- judul
+- excerpt
+- optional detail action
+
+Jangan semua announcement dibungkus card besar.
+
+---
+
+# 22. Announcement Page
+
+Route public announcement harus fokus pada readability.
+
+Struktur:
+
+```text
+PENGUMUMAN
+
+Informasi terbaru untuk Class 1IA08.
+
+---------------------------------
+
+Tanggal
+Judul
+Isi ringkas
+```
+
+Data hanya tampil bila:
+
+```text
+aktif = true
+```
+
+Order:
+- tanggal terbaru
+- fallback created_at terbaru bila dibutuhkan
+
+Jangan tampilkan announcement nonaktif di public.
+
+---
+
+# 23. Assignments / Tugas
+
+Sumber data:
+
+```text
+public.tugas
+```
+
+Setiap tugas memiliki:
+
+- id
+- mata_kuliah_id
+- tanggal_tugas
+- catatan
+- created_at
+- updated_at
+
+Public assignment UI harus menampilkan secara jelas:
+
+```text
+Nama Mata Kuliah
+Tanggal Tugas
+Catatan
+Attachment/Foto jika ada
+```
+
+Jika `catatan` kosong:
+jangan tampilkan placeholder panjang.
+
+---
+
+# 24. Assignment Display
+
+Prefer editorial rows/list.
+
+Example:
+
+```text
+02 OCT
+
+PEMROGRAMAN WEB
+
+Tugas membuat halaman responsif menggunakan React.
+
+2 lampiran
+VIEW DETAIL →
+```
+
+Hindari:
+- kanban
+- progress board
+- task assignment UI
+- project management layout
+
+Ini hanya informasi tugas kelas.
+
+---
+
+# 25. Task Detail
+
+Jika detail route dibuat, tampilkan:
+
+```text
+Mata Kuliah
+Tanggal Tugas
+Catatan
+Lampiran/Foto
+Tanggal dibuat/diupdate bila relevan
+```
+
+Gunakan `tugas_foto` sebagai attachment list.
+
+---
+
+# 26. Mata Kuliah
+
+Sumber data:
+
+```text
+public.mata_kuliah
+```
+
+Field:
+
+```text
+id
+nama
+kode
+aktif
+created_at
+```
+
+Public hanya menampilkan mata kuliah aktif:
+
+```text
+aktif = true
+```
+
+Tampilan:
+
+```text
+KODE
+NAMA MATA KULIAH
+```
+
+Jika kode null:
+jangan tampilkan placeholder palsu.
+
+---
+
+# 27. Course / Mata Kuliah UI
+
+Gunakan compact list atau simple grid.
+
+Jangan setiap mata kuliah dibuat kartu besar.
+
+Contoh:
+
+```text
+IF101
+Pemrograman Dasar
+
+IF102
+Basis Data
+```
+
+Hover:
+- subtle border
+- slight blue accent
+- no heavy shadow
+
+---
+
+# 28. Tugas Foto / Attachment
+
+Sumber data:
+
+```text
+public.tugas_foto
+```
+
+Field:
+
+```text
+id
+tugas_id
+storage_path
+file_name
+file_size
+mime_type
+created_at
+```
+
+Relasi:
+
+```text
+tugas_foto.tugas_id → tugas.id
+```
+
+Gunakan untuk:
+- foto tugas
+- attachment
+- preview file
+
+Storage file mengacu pada `storage_path`.
+
+Jangan expose storage path mentah ke user jika signed/public URL handling diperlukan.
+
+---
+
+# 29. Attachment UI
+
+Attachment dapat ditampilkan sebagai:
+
+```text
+[ thumbnail / icon ]
+
+file_name
+file_size
+mime_type
+
+OPEN / DOWNLOAD
+```
+
+Jika image:
+- preview thumbnail
+- modal/lightbox optional
+
+Jika non-image:
+- gunakan file icon
+- tampilkan nama file
+
+Jangan buat attachment gallery berlebihan.
+
+---
+
+# 30. Class Information
+
+Class Information bersifat editorial.
+
+Tampilkan informasi nyata seperti:
+- Class 1IA08
+- program/study info jika tersedia
+- semester/academic year bila tersedia
+- short class description
+- important class link bila memang public
+
+Jangan invent data.
+
+Layout:
+- split layout
+- strong heading
+- clean supporting text
+
+Bukan giant card.
+
+---
+
+# 31. Important Links
+
+Jika ada link penting kelas:
+- Drive
+- resource
+- shared class document
+- public group info
+
+hanya tampilkan jika aman untuk public.
+
+Gunakan simple list:
+
+```text
+Google Drive Class      ↗
+Shared Material         ↗
+```
+
+Jangan expose link private.
+
+---
+
+# 32. Footer
+
+Footer compact.
+
+Concept:
+
+```text
+CLASS 1IA08.
+
+Pusat informasi untuk kelas.
+
+Pengumuman
+Tugas
+Mata Kuliah
+
+© current year Class 1IA08
+
+BACK TO TOP ↑
+```
+
+Jangan oversized.
+
+---
+
+# 33. Public Motion Rules
+
+Gunakan:
+- opacity
+- y translation
+- subtle scale
+- stagger
+- scroll reveal
+
+Hindari:
+- bouncing terus-menerus
+- heavy parallax
+- animation pada setiap item
+- uncontrolled rotation
+- continuous effects tanpa fungsi
+
+---
+
+# 34. Hover Interaction
+
+Desktop:
+- subtle border accent
+- small translate
+- small scale
+- arrow movement
+- underline
+
+Contoh:
+
+```text
+translateY: -2px
+scale: 1.01
+```
+
+Mobile tidak boleh bergantung pada hover.
+
+---
+
+# 35. Responsive Philosophy
+
+Desktop boleh lebih interaktif.
+
+Mobile harus:
+- lebih sederhana
+- cepat
+- readable
+- touch-friendly
+- no horizontal overflow
+- no hover dependency
+- reduced expensive animation
+
+---
+
+# 36. Reduced Motion
+
+Respect:
+
+```css
+prefers-reduced-motion: reduce
+```
+
+Saat aktif:
+- stop background continuous animation
+- reduce reveal movement
+- disable mouse tracking
+- keep content immediately visible
+
+Motion = enhancement, bukan requirement.
+
+---
+
+# 37. Accessibility
+
+Wajib:
+- semantic headings
+- visible focus
+- sufficient contrast
+- meaningful alt text
+- keyboard support
+- accessible nav
+- labels pada form
+- no hover-only information
+- accessible modal/dialog
+
+Gunakan semantic HTML sebelum ARIA.
+
+---
+
+# 38. Supabase Database — Source of Truth
+
+Gunakan schema dari Supabase sebagai sumber data utama.
+
+Current public tables:
+
+```text
+profiles
+pengumuman
+mata_kuliah
+tugas
+tugas_foto
+```
+
+Jangan membuat UI untuk entity yang tidak ada tanpa requirement baru.
+
+---
+
+# 39. Table: profiles
+
+Supabase table:
+
+```text
+profiles
+```
+
+Columns:
+
+```text
+id          uuid
+full_name   text
+role        text
+created_at  timestamptz
+```
+
+Relation:
+
+```text
+profiles.id → auth.users.id
+```
+
+Purpose:
+- menyimpan profil user/admin
+- menyimpan role
+
+Jangan tampilkan semua profile public secara otomatis.
+
+Data profile harus digunakan sesuai permission.
+
+---
+
+# 40. Table: pengumuman
+
+Supabase table:
+
+```text
+pengumuman
+```
+
+Columns:
+
+```text
+id          int8
+judul       text
+isi         text
+tanggal     date
+aktif       bool
+created_at  timestamptz
+updated_at  timestamptz
+```
+
+Purpose:
+- menyimpan pengumuman kelas
+
+Public:
+- hanya `aktif = true`
+
+Admin:
+- list
+- create
+- edit
+- activate/deactivate
+- delete bila requirement memang mengizinkan
+
+---
+
+# 41. Table: mata_kuliah
+
+Supabase table:
+
+```text
+mata_kuliah
+```
+
+Columns:
+
+```text
+id          int8
+nama        text
+kode        text nullable
+aktif       bool
+created_at  timestamptz
+```
+
+Purpose:
+- data mata kuliah
+
+Public:
+- hanya mata kuliah aktif
+
+Admin:
+- create
+- edit
+- activate/deactivate
+- delete hanya bila aman terhadap relasi tugas
+
+---
+
+# 42. Table: tugas
+
+Supabase table:
+
+```text
+tugas
+```
+
+Columns:
+
+```text
+id              int8
+mata_kuliah_id  int8
+tanggal_tugas   date
+catatan         text nullable
+created_at      timestamptz
+updated_at      timestamptz
+```
+
+Relation:
+
+```text
+tugas.mata_kuliah_id → mata_kuliah.id
+```
+
+Purpose:
+- menyimpan informasi tugas kelas
+
+Public:
+- tampilkan tugas dengan nama mata kuliah
+- tanggal
+- catatan
+- attachment/foto bila tersedia
+
+Admin:
+- create
+- edit
+- delete
+- pilih mata kuliah dari data aktif
+
+---
+
+# 43. Table: tugas_foto
+
+Supabase table:
+
+```text
+tugas_foto
+```
+
+Columns:
+
+```text
+id            int8
+tugas_id      int8
+storage_path  text
+file_name     text
+file_size     int8
+mime_type     text
+created_at    timestamptz
+```
+
+Relation:
+
+```text
+tugas_foto.tugas_id → tugas.id
+```
+
+Purpose:
+- menyimpan metadata foto/file attachment tugas
+
+Admin:
+- upload
+- preview
+- delete
+
+Public:
+- preview attachment yang sesuai
+- open/download jika diizinkan
+
+---
+
+# 44. Database Relationship Summary
+
+```text
+auth.users
+    │
+    └── profiles
+         id → auth.users.id
+
+
+mata_kuliah
+    │
+    └── tugas
+         mata_kuliah_id → mata_kuliah.id
+             │
+             └── tugas_foto
+                  tugas_id → tugas.id
+
+
+pengumuman
+    standalone content table
+```
+
+Jangan menduplikasi data mata kuliah di table tugas.
+
+Selalu gunakan relasi.
+
+---
+
+# 45. Data UI Rules
+
+Public:
+- content-first
+- hanya data yang perlu dilihat mahasiswa
+- jangan expose raw technical fields
+- jangan tampilkan ID database
+- jangan tampilkan storage path mentah
+
+Admin:
+- tampilkan field yang diperlukan untuk mengelola konten
+- technical metadata dapat ditempatkan sebagai secondary info
+
+---
+
+# 46. Supabase Query Direction
+
+Public queries harus:
+- select field yang diperlukan saja
+- filter `aktif = true` untuk pengumuman/mata kuliah
+- order by tanggal/created_at sesuai kebutuhan
+- include relation mata kuliah pada tugas
+- include tugas_foto bila detail membutuhkan attachment
+
+Jangan overfetch tanpa kebutuhan.
+
+---
+
+# 47. Loading State
+
+Public:
+- subtle skeleton
+- no giant spinner
+
+Admin:
+- shadcn Skeleton
+- button loading
+- table loading
+
+---
+
+# 48. Empty State
+
+Public examples:
+
+```text
+Belum ada pengumuman terbaru.
+```
+
+```text
+Belum ada tugas yang ditampilkan.
+```
+
+```text
+Belum ada mata kuliah aktif.
+```
+
+Admin:
+
+```text
+Belum ada pengumuman.
+
+Tambah pengumuman pertama.
+```
+
+Jangan pakai giant illustration.
+
+---
+
+# 49. Error State
+
+Public:
+
+```text
+Data belum dapat dimuat.
+Silakan coba lagi.
+```
+
+Admin:
+
+```text
+Gagal menyimpan data.
+Periksa kembali lalu coba lagi.
+```
+
+Jangan tampilkan raw Supabase error ke user.
+
+---
+
+# 50. Admin Dashboard Direction
+
+Admin menggunakan shadcn/ui.
+
+Primary goals:
+- fast content management
+- clarity
+- predictable workflow
+
+Tidak perlu ReactBits.
+
+---
+
+# 51. Admin Sidebar
+
+Gunakan existing shadcn Sidebar.
+
+Structure mengikuti fitur nyata:
+
+```text
+Overview
+
+Content
+- Pengumuman
+- Mata Kuliah
+- Tugas
+
+Settings
+
+Logout
+```
+
+Jika attachment dikelola di dalam Tugas:
+jangan buat menu `Tugas Foto` terpisah.
 
 Gunakan:
 
@@ -276,937 +1399,469 @@ SidebarFooter
 SidebarInset
 ```
 
-Gunakan `SidebarInset` agar content dashboard tidak overlap dengan sidebar.
+`SidebarInset` wajib agar content tidak overlap.
 
 ---
 
-# 9. Visual Direction
+# 52. Admin Dashboard Overview
 
-Gunakan gaya:
+Hanya tampilkan real metrics.
 
-**Clean Modern Campus Interface**
-
-Karakteristik:
-
-- typography kuat namun tidak berlebihan
-- whitespace terkontrol
-- subtle border
-- neutral surfaces
-- satu primary accent
-- hierarchy jelas
-- content-first design
-
-Public website boleh memiliki lebih banyak identitas visual.
-
-Admin dashboard harus lebih utilitarian dan fokus pada efisiensi.
-
----
-
-# 10. Color Direction
-
-Gunakan neutral base dengan satu primary accent.
-
-Default:
+Contoh bila tersedia:
 
 ```text
-Background:      #F8FAFC
-Surface:         #FFFFFF
-Main text:       #0F172A
-Secondary text:  #475569
-Muted text:      #64748B
-Border:          #E2E8F0
-
-Primary:         #2563EB
-Primary hover:   #1D4ED8
-Primary subtle:  #EFF6FF
+Jumlah Pengumuman Aktif
+Jumlah Mata Kuliah Aktif
+Jumlah Tugas
+Tugas Terbaru
 ```
 
-Jika Class 1IA08 nantinya memiliki warna identitas resmi, warna tersebut dapat menggantikan primary default.
+Jangan buat fake charts.
 
-Jangan memenuhi seluruh interface dengan primary color.
+Jangan buat fake analytics.
 
 ---
 
-# 11. Semantic Colors
+# 53. Admin Pengumuman
 
-Gunakan semantic color hanya untuk status yang benar-benar memiliki arti.
+Admin page:
+
+```text
+Pengumuman
+
+Kelola informasi yang ditampilkan kepada mahasiswa.
+
+[ + Tambah Pengumuman ]
+
+Search...
+
+-----------------------------------------
+Judul       Tanggal       Status   Actions
+-----------------------------------------
+```
+
+Gunakan:
+- Table
+- Badge
+- DropdownMenu
+- Dialog/Sheet
+- AlertDialog
+
+---
+
+# 54. Admin Mata Kuliah
+
+Admin page:
+
+```text
+Mata Kuliah
+
+Kelola daftar mata kuliah kelas.
+
+[ + Tambah Mata Kuliah ]
+
+-----------------------------------
+Kode     Nama     Status     Actions
+-----------------------------------
+```
+
+Status:
+- aktif
+- nonaktif
+
+---
+
+# 55. Admin Tugas
+
+Admin page:
+
+```text
+Tugas
+
+Kelola tugas berdasarkan mata kuliah.
+
+[ + Tambah Tugas ]
+
+------------------------------------------------
+Tanggal    Mata Kuliah    Lampiran    Actions
+------------------------------------------------
+```
+
+Create/Edit form:
+
+```text
+Mata Kuliah
+Tanggal Tugas
+Catatan
+Attachment
+```
+
+Gunakan data `mata_kuliah` untuk select.
+
+---
+
+# 56. Admin Attachment
+
+Attachment dikelola dalam task form/detail.
+
+Functions:
+- upload
+- preview
+- remove
+- file metadata
+
+Jangan membuat upload UI yang terlalu kompleks.
+
+---
+
+# 57. Admin Forms
+
+Gunakan:
+- Label
+- Input
+- Textarea
+- Select
+- Button
+
+Need:
+- validation
+- error
+- loading
+- disabled
+- success feedback
+
+---
+
+# 58. Admin Delete
+
+Destructive actions wajib confirmation.
+
+Gunakan shadcn `AlertDialog`.
 
 Contoh:
+- delete pengumuman
+- delete tugas
+- delete attachment
 
-```text
-Green  → published / success
-Amber  → draft / warning
-Red    → destructive / error
-Blue   → information
-```
-
-Jangan menggunakan semantic colors sebagai dekorasi.
+Untuk mata kuliah yang punya tugas:
+pastikan behavior database aman sebelum delete.
 
 ---
 
-# 12. Typography
+# 59. Admin Login
 
-Gunakan font yang mudah dibaca.
+Login tetap simple.
 
-Default:
+Gunakan:
+- Input
+- Button
+- visible labels
+- clear errors
+- back link
 
-```text
-Inter, system-ui, sans-serif
-```
+Tidak perlu ReactBits.
 
-atau font existing project jika sudah ditentukan.
-
-Hierarchy:
-
-### Page title
-
-```text
-font-semibold
-text-2xl md:text-3xl
-```
-
-### Section title
-
-```text
-font-semibold
-text-lg md:text-xl
-```
-
-### Component title
-
-```text
-font-medium
-text-base
-```
-
-### Body
-
-```text
-text-sm md:text-base
-```
-
-### Metadata
-
-```text
-text-sm
-text-muted-foreground
-```
-
-Hindari:
-
-- heading terlalu besar
-- bold pada hampir semua text
-- terlalu banyak hierarchy
-- uppercase paragraphs
-- decorative fonts untuk UI
+Tidak perlu public interactive background.
 
 ---
 
-# 13. Public Website Layout
+# 60. Admin Theme
 
-Gunakan container:
+Admin dapat mengikuti dark/light semantic tokens.
 
-```text
-max-w-7xl
-mx-auto
-px-4
-sm:px-6
-lg:px-8
-```
+Tetapi admin tidak perlu accent blue sekuat public.
 
-Untuk konten berbasis teks, gunakan width yang lebih terbatas agar mudah dibaca.
-
-Contoh:
-
-```text
-max-w-3xl
-```
-
-Gunakan spacing sebagai struktur visual.
-
-Jangan otomatis membungkus setiap section dengan card.
+Gunakan shadcn system colors secara konsisten.
 
 ---
 
-# 14. Public Navigation
-
-Navigation harus sederhana.
-
-Navigation hanya berisi halaman yang benar-benar tersedia.
-
-Contoh struktur dapat berupa:
-
-```text
-Home
-Announcements
-Class Information
-Members
-Gallery
-```
-
-Tetapi jangan membuat halaman tersebut hanya karena tercantum sebagai contoh.
-
-Gunakan hanya fitur yang sudah menjadi requirement project.
-
-Navbar desktop harus sederhana.
-
-Mobile gunakan accessible menu atau sheet.
-
-Active route harus terlihat jelas.
-
----
-
-# 15. Homepage
-
-Homepage bukan landing page startup.
-
-Homepage harus menjawab:
-
-> “Apa informasi utama tentang Class 1IA08?”
-
-Homepage dapat menampilkan konten seperti:
-
-### Class Identity
-
-- Class 1IA08
-- identitas singkat
-- semester/program jika tersedia
-
-### Important Information
-
-Informasi kelas yang paling relevan.
-
-### Latest Announcements
-
-Beberapa pengumuman terbaru.
-
-### Class Content
-
-Informasi atau aktivitas kelas yang relevan sesuai requirements.
-
-Tidak perlu:
-
-- giant hero
-- marketing CTA
-- fake statistics
-- testimonials
-- pricing-style cards
-- feature comparison
-
----
-
-# 16. Announcements
-
-Announcement harus terasa seperti pengumuman kelas asli.
-
-Setiap announcement dapat memiliki:
-
-- title
-- publication date
-- author jika diperlukan
-- content
-- optional image
-- optional attachment/link
-
-Public view harus mengutamakan keterbacaan.
-
-Admin dapat:
-
-- create
-- edit
-- delete
-- publish/unpublish
-
-hanya jika fitur tersebut memang masuk requirements backend.
-
-Admin management sebaiknya menggunakan:
-
-```text
-Table
-DropdownMenu
-Dialog
-AlertDialog
-Button
-Badge
-Pagination
-```
-
-dari shadcn/ui.
-
----
-
-# 17. Members
-
-Jika website memiliki halaman anggota kelas, prioritaskan identitas mahasiswa secara sederhana.
-
-Informasi dapat berupa:
-
-- name
-- photo/avatar
-- role/class position jika ada
-
-Jangan membuat profil terasa seperti employee directory corporate.
-
-Admin management dapat menggunakan table atau list sederhana.
-
----
-
-# 18. Gallery
-
-Jika gallery merupakan bagian requirements:
+# 61. Buttons
 
 Public:
 
-- visual-first
-- grid responsive
-- image aspect ratio konsisten
-- tidak terlalu banyak card decoration
+Primary:
+- blue accent
+- strong contrast
+
+Secondary:
+- transparent/dark
+- border
+
+Text link:
+- minimal
+- arrow optional
 
 Admin:
-
-- upload
-- preview
-- delete
-- edit metadata jika dibutuhkan
-
-Gunakan dialog/form shadcn pada admin.
+ikuti shadcn variants.
 
 ---
 
-# 19. Admin Dashboard Overview
+# 62. Cards
 
-Dashboard admin adalah halaman ringkasan pengelolaan website.
+Public:
+gunakan card hanya jika grouping membutuhkan surface.
 
-Dashboard **bukan** halaman mahasiswa.
+Sebelum card:
+cek apakah separator/spacing cukup.
 
-Dashboard hanya boleh menampilkan informasi yang berguna untuk admin.
+Admin:
+card boleh untuk summary/settings.
 
-Contoh:
+Avoid:
+- rounded-3xl
+- shadow-2xl
+- glass panel
+- gradient border
+
+---
+
+# 63. Radius
+
+Public:
 
 ```text
-Jumlah announcement
-Jumlah member
-Jumlah gallery item
-Recent content
-Recent admin activity
+6px–12px
 ```
 
-Hanya tampilkan metric yang benar-benar memiliki data.
-
-Jangan membuat statistik palsu hanya untuk mengisi dashboard.
+Admin:
+gunakan shadcn defaults.
 
 ---
 
-# 20. Admin Dashboard Layout
+# 64. Shadows
+
+Gunakan shadow minimal.
+
+Prefer:
+- border
+- spacing
+- hierarchy
+
+Jangan heavy glowing shadow.
+
+---
+
+# 65. Icons
+
+Gunakan Lucide React.
+
+Examples:
+
+```text
+Megaphone
+BookOpen
+CalendarDays
+Paperclip
+FileText
+ExternalLink
+ArrowRight
+Moon
+Sun
+Menu
+X
+Upload
+Trash2
+Pencil
+MoreHorizontal
+```
+
+Icon harus memiliki fungsi.
+
+---
+
+# 66. Copywriting
+
+Gunakan Bahasa Indonesia sebagai bahasa utama.
+
+Technical labels/section labels boleh English jika konsisten.
+
+Contoh acceptable:
+
+```text
+01 / LATEST UPDATES
+
+Pengumuman terbaru untuk Class 1IA08.
+```
+
+Hindari corporate/AI phrases:
+- seamless
+- empower
+- revolutionary
+- next-generation
+- innovative ecosystem
+
+---
+
+# 67. Performance
+
+Public:
+- lightweight motion
+- lazy load below fold
+- no multiple WebGL canvases
+- no physics
+- no unnecessary continuous animation
+
+Mobile:
+- simplify effects
+
+---
+
+# 68. Image Rules
+
+Images:
+- maintain aspect ratio
+- meaningful alt text
+- lazy-load below fold
+- no stretching
+- object-cover only when appropriate
+
+Task attachment image:
+- preview cleanly
+- support modal only if useful
+
+---
+
+# 69. Public Routes
+
+Gunakan hanya routes yang nyata.
+
+Current/future valid examples berdasarkan data:
+
+```text
+/
+ /pengumuman
+ /tugas
+ /mata-kuliah
+```
+
+Buat route baru hanya jika implementasi dan data benar-benar tersedia.
+
+Jangan buat:
+- members
+- gallery
+- activities
+
+sebelum feature/data ada.
+
+---
+
+# 70. Section Rhythm
 
 Desktop:
 
 ```text
-┌──────────────┬─────────────────────────────┐
-│              │ Header / Breadcrumb         │
-│   Sidebar    ├─────────────────────────────┤
-│              │                             │
-│              │ Main Content                │
-│              │                             │
-└──────────────┴─────────────────────────────┘
+py-24
+to
+py-32
 ```
 
 Mobile:
 
 ```text
-┌───────────────────────────────┐
-│ Menu  Page Title              │
-├───────────────────────────────┤
-│                               │
-│ Main Content                  │
-│                               │
-└───────────────────────────────┘
+py-16
+to
+py-20
 ```
 
-Sidebar pada mobile menjadi drawer/sheet.
-
-Tidak boleh ada horizontal scroll akibat sidebar.
+Hindari gap sangat besar tanpa alasan.
 
 ---
 
-# 21. Admin Page Structure
+# 71. Shared Alignment
 
-Setiap admin page sebaiknya mengikuti struktur konsisten:
+Semua section utama align pada grid yang sama.
 
-```text
-Breadcrumb
-↓
-Page title + description
-↓
-Primary action
-↓
-Filters/Search jika diperlukan
-↓
-Main content
-↓
-Pagination jika diperlukan
-```
-
-Contoh:
+Example:
 
 ```text
-Announcements
-
-Kelola pengumuman yang ditampilkan di website kelas.
-
-                              [+ Tambah Pengumuman]
-
-[ Search announcement... ]
-
---------------------------------------------------
-Title       Status       Published      Actions
---------------------------------------------------
-...
+01 / LATEST UPDATES
+LATEST ANNOUNCEMENTS
 ```
+
+dan:
+
+```text
+02 / ASSIGNMENTS
+LATEST TASKS
+```
+
+harus memiliki alignment konsisten.
 
 ---
 
-# 22. Tables
+# 72. Final Public Goal
 
-Gunakan table hanya pada admin dashboard.
+Public website harus terasa seperti:
 
-Table harus:
+> digital home untuk Class 1IA08.
 
-- readable
+Harus:
+- modern
+- dark-first
+- mudah dibaca
+- interaktif
+- terorganisir
+- cocok untuk mahasiswa
+
+Tidak boleh terasa seperti:
+- portfolio clone
+- SaaS startup
+- dashboard
+- AI template
+- effect showcase
+
+---
+
+# 73. Final Admin Goal
+
+Admin dashboard harus terasa:
+
+> content management tool untuk Class 1IA08.
+
+Harus:
+- simple
+- reliable
+- efficient
 - responsive
-- memiliki action yang jelas
-- tidak terlalu banyak kolom
-- tidak menampilkan data yang tidak penting
+- accessible
 
-Untuk mobile, pertimbangkan:
-
-- hide secondary columns
-- horizontal scroll hanya jika benar-benar diperlukan
-- alternative compact representation
-
-Action gunakan `DropdownMenu` bila terdapat beberapa action.
+Bukan versi lain dari public website.
 
 ---
 
-# 23. Forms
+# 74. Final Priority
 
-Admin forms harus memiliki:
-
-- visible label
-- validation
-- error message
-- loading state
-- disabled state
-- success feedback
-
-Gunakan komponen shadcn:
+Saat membuat keputusan desain:
 
 ```text
-Input
-Textarea
-Select
-Checkbox
-Button
-Label
+Content
+>
+Clarity
+>
+Usability
+>
+Accessibility
+>
+Hierarchy
+>
+Motion
+>
+Decoration
 ```
 
-Jika memakai form library di kemudian hari, jangan memperkenalkan dependency hanya untuk form kecil.
+Jika sebuah effect mengurangi keterbacaan:
+hapus effect.
 
----
+Jika interface terasa seperti dashboard pada public side:
+sederhanakan.
 
-# 24. Dialogs
+Jika data tidak ada:
+jangan buat fake content.
 
-Gunakan `Dialog` untuk:
+Jika card tidak diperlukan:
+gunakan spacing atau separator.
 
-- create/edit small content
-- preview
-- supporting actions
+Jika warna dekoratif tidak memiliki fungsi:
+jangan gunakan.
 
-Gunakan dedicated page jika form terlalu kompleks.
-
-Gunakan `AlertDialog` untuk destructive action seperti:
-
-```text
-Delete announcement
-Delete member
-Delete gallery item
-```
-
-Destructive action harus meminta konfirmasi.
-
----
-
-# 25. Buttons
-
-Gunakan hierarchy yang jelas.
-
-Primary:
-
-```text
-Tambah Pengumuman
-Simpan
-Publish
-```
-
-Secondary:
-
-```text
-Batal
-Preview
-```
-
-Destructive:
-
-```text
-Hapus
-```
-
-Ghost:
-
-```text
-table actions
-navigation utilities
-```
-
-Jangan memiliki banyak primary button yang bersaing di satu section.
-
----
-
-# 26. Cards
-
-Public website:
-
-Gunakan cards hanya saat grouping content memang membutuhkan container.
-
-Admin dashboard:
-
-Card diperbolehkan untuk:
-
-- summary metrics
-- grouped settings
-- dashboard overview
-
-Tetapi hindari dashboard yang seluruhnya berupa card-grid tanpa hierarchy.
-
-Recommended:
-
-```text
-rounded-lg
-border
-bg-card
-```
-
-Hindari:
-
-```text
-rounded-3xl
-shadow-2xl
-glassmorphism
-gradient border
-```
-
----
-
-# 27. Radius and Shadows
-
-Gunakan radius secara konsisten.
-
-```text
-Button → shadcn default
-Input → shadcn default
-Card → rounded-lg
-Dialog → shadcn default
-```
-
-Gunakan shadow minimal.
-
-Border dan hierarchy lebih disukai daripada heavy shadow.
-
----
-
-# 28. Icons
-
-Gunakan **Lucide React**.
-
-Icons harus memiliki fungsi.
-
-Admin examples:
-
-```text
-LayoutDashboard
-Megaphone
-Users
-Images
-Settings
-LogOut
-Plus
-Pencil
-Trash2
-MoreHorizontal
-Menu
-```
-
-Jangan gunakan icon hanya untuk dekorasi.
-
----
-
-# 29. Loading States
-
-Handle loading state secara eksplisit.
-
-Gunakan:
-
-- shadcn Skeleton untuk content
-- button loading state untuk mutation
-- subtle progress indicator bila relevan
-
-Hindari full-screen spinner untuk operasi kecil.
-
----
-
-# 30. Empty States
-
-Empty state harus sederhana.
-
-Contoh admin:
-
-```text
-Belum ada pengumuman.
-
-Tambahkan pengumuman pertama untuk mulai menampilkan informasi kepada mahasiswa.
-```
-
-Kemudian primary action:
-
-```text
-Tambah Pengumuman
-```
-
-Jangan menggunakan ilustrasi besar hanya untuk mengisi ruang.
-
----
-
-# 31. Error States
-
-Jangan menampilkan raw Supabase error kepada user.
-
-Public example:
-
-```text
-Pengumuman belum dapat dimuat.
-Silakan coba lagi.
-```
-
-Admin example:
-
-```text
-Gagal menyimpan pengumuman.
-Periksa data lalu coba lagi.
-```
-
-Technical error tetap dapat dicatat di console/log bila diperlukan saat development.
-
----
-
-# 32. Responsive Design
-
-Website harus berfungsi baik pada:
-
-```text
-Mobile
-Tablet
-Laptop
-Desktop
-```
-
-## Public
-
-Mobile-first readability.
-
-Pastikan:
-
-- navigation dapat digunakan
-- text tidak terlalu kecil
-- gambar responsive
-- tidak ada horizontal overflow
-- spacing proporsional
-
-## Admin
-
-Desktop dapat menggunakan sidebar permanen.
-
-Mobile menggunakan drawer/sidebar trigger.
-
-Admin table dan forms harus tetap usable pada viewport kecil.
-
-Jangan hanya mengecilkan desktop layout.
-
----
-
-# 33. Accessibility
-
-Semua halaman harus mendukung:
-
-- semantic HTML
-- keyboard navigation
-- visible focus
-- sufficient contrast
-- labels
-- accessible dialog
-- accessible dropdown
-- alt text
-- touch target yang layak
-
-Shadcn membantu menyediakan foundation accessibility, tetapi implementasinya tetap harus benar.
-
-Jangan mengandalkan warna sebagai satu-satunya indikator.
-
----
-
-# 34. Motion
-
-Motion harus minimal.
-
-Allowed:
-
-- hover
-- dropdown
-- sidebar transition
-- dialog transition
-- accordion/disclosure
-- subtle state transitions
-
-Recommended:
-
-```text
-150ms–250ms
-```
-
-Hindari:
-
-- floating animation
-- scroll animation berlebihan
-- entrance animation pada semua section
-- bouncing icons
-- parallax
-- auto-moving visual
-
----
-
-# 35. Copywriting
-
-Untuk UI utama gunakan bahasa Indonesia yang natural.
-
-Contoh bagus:
-
-```text
-Pengumuman terbaru
-Tentang kelas
-Anggota kelas
-Lihat semua
-Tambah pengumuman
-Simpan perubahan
-Hapus pengumuman
-```
-
-Hindari:
-
-```text
-Unlock Your Potential
-Experience Excellence
-Empowering Your Academic Journey
-Discover More
-Transform Your Experience
-```
-
-Website adalah utility dan identity website kelas, bukan marketing product.
-
----
-
-# 36. Components
-
-Buat reusable components hanya ketika memang digunakan berulang.
-
-Potential public components:
-
-```text
-Navbar
-MobileNav
-Footer
-SectionHeader
-AnnouncementItem
-MemberCard
-GalleryItem
-EmptyState
-```
-
-Potential admin components:
-
-```text
-AdminSidebar
-AdminHeader
-AdminPageHeader
-DataTable
-ContentStatusBadge
-DeleteConfirmation
-EmptyState
-```
-
-Jangan membuat abstraction berlebihan.
-
----
-
-# 37. Suggested Folder Direction
-
-Jangan restructure hanya demi terlihat rapi.
-
-Jika codebase bertambah, arah yang dapat digunakan:
-
-```text
-src/
-├── assets/
-├── components/
-│   ├── public/
-│   ├── admin/
-│   └── ui/
-├── layouts/
-│   ├── PublicLayout.jsx
-│   └── AdminLayout.jsx
-├── lib/
-├── pages/
-│   ├── public/
-│   └── admin/
-├── routes/
-└── App.jsx
-```
-
-`components/ui` digunakan untuk komponen shadcn.
-
----
-
-# 38. Public vs Admin Separation
-
-Jaga separation yang jelas.
-
-Public:
-
-```text
-/
-...
-```
-
-Admin:
-
-```text
-/admin
-/admin/...
-```
-
-Admin dashboard tidak boleh mengubah public site menjadi dashboard.
-
-Gunakan layout berbeda:
-
-```text
-PublicLayout
-AdminLayout
-```
-
-Authentication dan authorization admin harus tetap ditangani dengan benar.
-
-Frontend hiding bukan security mechanism.
-
----
-
-# 39. Existing Project Cleanup
-
-Sebelum menghapus code, cek penggunaannya.
-
-Existing template CSS seperti:
-
-```text
-.counter
-.hero
-#next-steps
-#docs
-.ticks
-```
-
-kemungkinan berasal dari starter template.
-
-Hapus hanya jika sudah dipastikan tidak digunakan.
-
-Jangan melakukan unrelated refactor saat mengerjakan satu fitur.
-
----
-
-# 40. Design Review Checklist
-
-Sebelum frontend dianggap selesai, cek:
-
-### Public
-
-- Apakah terlihat seperti website kelas?
-- Apakah informasi utama mudah ditemukan?
-- Apakah navigation sederhana?
-- Apakah ada UI dekoratif tanpa fungsi?
-- Apakah mobile nyaman digunakan?
-- Apakah copy terasa natural?
-- Apakah tampilannya bebas AI-slop?
-
-### Admin
-
-- Apakah menggunakan shadcn/ui secara konsisten?
-- Apakah sidebar responsive?
-- Apakah menggunakan `SidebarInset`?
-- Apakah page hierarchy jelas?
-- Apakah table mudah dibaca?
-- Apakah destructive action memiliki confirmation?
-- Apakah form memiliki validation/loading/error states?
-- Apakah mobile tetap usable?
-- Apakah admin dashboard hanya berisi informasi berguna?
-
-### General
-
-- Accessibility
-- responsive
-- loading states
-- empty states
-- error states
-- no unnecessary dependency
-- no unnecessary component abstraction
-- no fake data untuk dekorasi
-
----
-
-# 41. Source of Truth
-
-Untuk keputusan frontend gunakan urutan:
-
-```text
-1. Functional requirements
-2. DESIGN.md
-3. Existing project architecture
-4. AGENTS.md + Anti-Slop
-5. shadcn/ui patterns untuk Admin
-6. Existing visual patterns
-```
-
-Jika existing UI bertentangan dengan `DESIGN.md`, perbaiki secara bertahap.
-
-Jangan redesign bagian yang tidak berhubungan dengan task saat ini.
-
----
-
-# 42. Final Principle
-
-Public Class 1IA08 website harus terasa seperti:
-
-> Rumah digital modern untuk informasi dan identitas kelas 1IA08.
-
-Admin dashboard harus terasa seperti:
-
-> Tool internal yang bersih dan efisien untuk mengelola konten website.
-
-Bukan:
-
-> Task manager, LMS, SaaS dashboard, atau website hasil template AI.
+**Blue is the primary identity accent. Yellow is not part of the public visual identity.**
