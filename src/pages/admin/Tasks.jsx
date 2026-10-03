@@ -145,7 +145,7 @@ function AdminTasks() {
         files: selectedFiles,
       })
       if (err) {
-        toast.error('Gagal memperbarui data tugas.')
+        toast.error(err.message || 'Gagal memperbarui data tugas.')
       } else {
         toast.success('Tugas berhasil diperbarui.')
         if (warning) {
@@ -160,7 +160,7 @@ function AdminTasks() {
         files: selectedFiles,
       })
       if (err) {
-        toast.error('Gagal menambahkan tugas baru.')
+        toast.error(err.message || 'Gagal menambahkan tugas baru.')
       } else {
         toast.success('Tugas berhasil ditambahkan.')
         if (warning) {
