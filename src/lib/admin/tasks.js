@@ -78,7 +78,7 @@ export async function createTask({ mata_kuliah_id, tanggal_tugas, catatan, files
     ])
     .select(`
       id, mata_kuliah_id, tanggal_tugas, catatan, created_at,
-      mata_kuliah ( id, nama, kode, aktif )
+      mata_kuliah ( id, nama, kode, aktif ) I 
     `)
     .single()
 
