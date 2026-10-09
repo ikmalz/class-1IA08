@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { FileText, Image as ImageIcon, Paperclip, X, Download } from 'lucide-react'
 import { formatFileSize } from '../../lib/tasks'
+import { getAttachmentUrl } from '../../lib/admin/tasks'
 
 /**
  * TaskAttachmentList
@@ -53,7 +54,7 @@ export function TaskAttachmentList({ attachments, showTitle = true }) {
           const typeLabel = getFileTypeLabel(file.file_name, file.mime_type)
           const sizeText = formatFileSize(file.file_size)
           // Safe URL check: only if a verified public URL exists (e.g. from future bucket config or prop)
-          const fileUrl = file.url || null
+          const fileUrl = file.url || getAttachmentUrl(file.storage_path)
 
           return (
             <li
