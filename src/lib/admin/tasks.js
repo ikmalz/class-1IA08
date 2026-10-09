@@ -11,6 +11,41 @@ export function getAttachmentUrl(storagePath) {
   return data.publicUrl
 }
 
+export async function fetchAdminTasks() {
+  const { data, error } = await supabase
+    .from('tugas')
+    .select(`
+      id,
+      mata_kuliah_id,
+      tanggal_tugas,
+      catatan,
+      created_at,
+      updated_at,
+      mata_kuliah (
+        id,
+        nama,
+        kode,
+        aktif
+      ),
+      tugas_foto (
+        id,
+        file_name,
+        file_size,
+        mime_type,
+        storage_path
+      )
+    `)
+    .order('tanggal_tugas', { ascending: false })
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Error fetching admin tasks:', error)
+    return { data: null, error }
+  }
+
+  return { data: data ?? [], error: null }
+}
+
 // Upload file ke Storage + simpan metadata ke tabel tugas_foto
 async function uploadAttachments(taskId, files) {
   const uploaded = []
@@ -77,13 +112,18 @@ export async function createTask({ mata_kuliah_id, tanggal_tugas, catatan, files
       },
     ])
     .select(`
-      id, mata_kuliah_id, tanggal_tugas, catatan, created_at,
-      mata_kuliah ( id, nama, kode, aktif ) I 
+      id,
+      mata_kuliah_id,
+      tanggal_tugas,
+      catatan,
+      created_at,
+      updated_at,
+      mata_kuliah ( id, nama, kode, aktif )
     `)
     .single()
 
   if (taskError) {
-    console.error('Error creating task:', taskError)
+    console.error('Error creating task:', taskError.message || taskError, taskError)
     return { data: null, error: taskError }
   }
 
