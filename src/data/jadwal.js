@@ -10,9 +10,9 @@ export const jadwal = [
   { id: 1,  hari: "Senin",  mataKuliah: "Algoritma & Pemrograman 1C",      penanda: "",   jam: [3, 4], ruang: "G425", dosen: "Ety Sutanty" },
   { id: 2,  hari: "Senin",  mataKuliah: "Peng. Tekno. Komp. & Inf. A",     penanda: "**", jam: [5, 6], ruang: "G425", dosen: "Puji Sularsih" },
   { id: 3,  hari: "Senin",  mataKuliah: "Bahasa Inggris",                  penanda: "",   jam: [7, 8], ruang: "G425", dosen: "Suyudi" },
+  { id: 5,  hari: "Selasa", mataKuliah: "Peng. Tekno. Komp. & Inf. C",     penanda: "**", jam: [9, 10], ruang: "G315", dosen: "Eel Susilowati" },
 
   { id: 4,  hari: "Selasa", mataKuliah: "Fisika & Kimia Dasar 1B",         penanda: "",   jam: [1, 2], ruang: "G315", dosen: "Ati Harmoni" },
-  { id: 5,  hari: "Selasa", mataKuliah: "Peng. Tekno. Komp. & Inf. C",     penanda: "**", jam: [3, 4], ruang: "G315", dosen: "Eel Susilowati" },
   { id: 6,  hari: "Selasa", mataKuliah: "Fisika & Kimia Dasar 1A",         penanda: "",   jam: [6, 7], ruang: "G149", dosen: "Aji Abdillah Kharisma" },
 
   { id: 7,  hari: "Rabu",   mataKuliah: "Matematika Dasar 1",              penanda: "",   jam: [3, 4], ruang: "E523", dosen: "Didiek Pramono" },
