@@ -12,6 +12,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  background: rgba(255, 255, 255, 0.55); /* cadangan untuk browser tanpa color-mix */
   background:
     linear-gradient(
       135deg,
@@ -105,6 +106,7 @@
   bottom: 0;
   left: 0;
   width: 28%;
+  background: linear-gradient(90deg, transparent, #a5b4fc, transparent); /* cadangan */
   background: linear-gradient(
     90deg,
     transparent,
@@ -136,6 +138,7 @@
 /* Mode gelap */
 .dark .liquid-glass,
 [data-theme="dark"] .liquid-glass {
+  background: rgba(24, 24, 28, 0.6); /* cadangan */
   background:
     linear-gradient(
       135deg,
@@ -167,6 +170,7 @@
 .aurora-blob {
   position: absolute;
   border-radius: 9999px;
+  background: radial-gradient(circle at center, rgba(99, 102, 241, 0.5), transparent 68%); /* cadangan */
   background: radial-gradient(
     circle at center,
     color-mix(in srgb, var(--c, #6366f1) 75%, transparent) 0%,
