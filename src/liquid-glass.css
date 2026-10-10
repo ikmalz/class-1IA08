@@ -1,0 +1,312 @@
+/* ───────────────────────────────────────────────
+   Liquid Glass + animasi — halaman publik
+   Impor di main.jsx: import './liquid-glass.css'
+
+   Catatan performa: semua animasi di sini memakai
+   transform/opacity (dikerjakan GPU), tidak ada
+   animasi `left`, `filter: blur`, atau `mix-blend-mode`.
+   ─────────────────────────────────────────────── */
+
+/* ── Kaca bertingkat ── */
+.liquid-glass {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.30) 0%,
+      rgba(255, 255, 255, 0.06) 42%,
+      rgba(255, 255, 255, 0.16) 100%
+    ),
+    color-mix(
+      in srgb,
+      var(--public-bg-primary) var(--glass-tint, 45%),
+      transparent
+    );
+  -webkit-backdrop-filter: blur(var(--glass-blur, 22px)) saturate(190%) contrast(1.05);
+  backdrop-filter: blur(var(--glass-blur, 22px)) saturate(190%) contrast(1.05);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 0 22px rgba(255, 255, 255, 0.10),
+    0 12px 32px -12px var(--glass-glow, rgba(0, 0, 0, 0.35));
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Tepi gradien tipis */
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.08) 35%,
+    rgba(255, 255, 255, 0.08) 65%,
+    rgba(255, 255, 255, 0.55)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Kilau cahaya lewat (transform saja → ringan) */
+.liquid-glass::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(
+    105deg,
+    transparent,
+    rgba(255, 255, 255, 0.38),
+    transparent
+  );
+  transform: translateX(-150%) skewX(-18deg);
+  animation: glass-sheen 7s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform;
+}
+@keyframes glass-sheen {
+  0%, 62% { transform: translateX(-150%) skewX(-18deg); }
+  100%    { transform: translateX(350%) skewX(-18deg); }
+}
+
+/* ── Cahaya yang berjalan di sepanjang tepi kaca (navbar & tab bar) ── */
+.glass-beam {
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 3;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+.glass-beam::before,
+.glass-beam::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 28%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--public-accent) 85%, #ffffff),
+    transparent
+  );
+  will-change: transform;
+}
+.glass-beam::before { animation: beam-ltr 6s ease-in-out infinite; }
+.glass-beam::after  { animation: beam-rtl 6s ease-in-out infinite; animation-delay: -3s; opacity: 0.7; }
+@keyframes beam-ltr {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(360%); }
+}
+@keyframes beam-rtl {
+  0%   { transform: translateX(360%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Pill aktif: kaca mini */
+.glass-pill {
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.40),
+    rgba(255, 255, 255, 0) 70%
+  );
+}
+
+/* Mode gelap */
+.dark .liquid-glass,
+[data-theme="dark"] .liquid-glass {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.13) 0%,
+      rgba(255, 255, 255, 0.03) 42%,
+      rgba(255, 255, 255, 0.07) 100%
+    ),
+    color-mix(
+      in srgb,
+      var(--public-bg-primary) var(--glass-tint, 45%),
+      transparent
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+    0 12px 32px -12px var(--glass-glow, rgba(0, 0, 0, 0.6));
+}
+.dark .liquid-glass::after,
+[data-theme="dark"] .liquid-glass::after {
+  background: linear-gradient(
+    105deg,
+    transparent,
+    rgba(255, 255, 255, 0.14),
+    transparent
+  );
+}
+
+/* ── Aurora: gradien radial (tanpa blur/blend → ringan) ── */
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--c, #6366f1) 75%, transparent) 0%,
+    transparent 68%
+  );
+  opacity: 0.55;
+  will-change: transform;
+  animation: aurora-float 16s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.aurora-blob.b2 { animation-duration: 21s; animation-delay: -6s; }
+.aurora-blob.b3 { animation-duration: 25s; animation-delay: -11s; }
+@keyframes aurora-float {
+  0%   { transform: translate3d(-8%, -6%, 0) scale(1); }
+  50%  { transform: translate3d(10%, 8%, 0) scale(1.15); }
+  100% { transform: translate3d(-4%, 12%, 0) scale(0.95); }
+}
+
+/* ── Judul dengan kilau gradien ── */
+.text-shimmer {
+  background: linear-gradient(
+    110deg,
+    #ffffff 30%,
+    #c7d2fe 45%,
+    #ffffff 55%,
+    #ffffff 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: text-shimmer 8s linear infinite;
+}
+@keyframes text-shimmer {
+  0%   { background-position: 120% 0; }
+  100% { background-position: -120% 0; }
+}
+
+/* ── Tombol: kilau + denyut cahaya ── */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: translateX(-170%) skewX(-20deg);
+  animation: btn-sheen 4.5s ease-in-out infinite;
+  pointer-events: none;
+  will-change: transform;
+}
+@keyframes btn-sheen {
+  0%, 55% { transform: translateX(-170%) skewX(-20deg); }
+  100%    { transform: translateX(420%) skewX(-20deg); }
+}
+.glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--public-accent) 45%, transparent); }
+  50%      { box-shadow: 0 0 0 10px color-mix(in srgb, var(--public-accent) 0%, transparent); }
+}
+
+/* ── Marquee: teks berjalan tanpa henti ── */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+  will-change: transform;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* ── Kartu spotlight + tilt 3D mengikuti kursor ── */
+.spotlight-card {
+  position: relative;
+  transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.25s ease-out, border-color 0.2s ease;
+}
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    220px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--public-accent) 24%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+.spotlight-card:hover::before { opacity: 1; }
+
+/* ── Hentikan animasi saat elemen tidak terlihat (hemat baterai/CPU) ── */
+[data-paused="true"] .aurora-blob,
+[data-paused="true"] .text-shimmer,
+[data-paused="true"] .btn-shine::after,
+[data-paused="true"] .glow-pulse,
+[data-paused="true"] .marquee-track,
+[data-paused="true"].marquee .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ── Hormati "kurangi gerakan" ── */
+@media (prefers-reduced-motion: reduce) {
+  .liquid-glass::after,
+  .glass-beam::before,
+  .glass-beam::after,
+  .aurora-blob,
+  .text-shimmer,
+  .btn-shine::after,
+  .glow-pulse,
+  .marquee-track {
+    animation: none !important;
+  }
+  .text-shimmer {
+    background: none;
+    color: #fff;
+    -webkit-text-fill-color: #fff;
+  }
+  .spotlight-card {
+    transform: none !important;
+  }
+}
+
+/* Cadangan jika blur tidak didukung */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .liquid-glass {
+    background: var(--public-bg-primary);
+  }
+}

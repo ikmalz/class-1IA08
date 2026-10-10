@@ -5,6 +5,7 @@ import { supabase } from './supabaseClient'
  * Ordered by tanggal_tugas descending, then created_at descending.
  * Only tasks with active courses (aktif = true) are included.
  */
+
 export async function fetchTasks({ limit, mataKuliahId } = {}) {
   let query = supabase
     .from('tugas')
@@ -14,26 +15,15 @@ export async function fetchTasks({ limit, mataKuliahId } = {}) {
       tanggal_tugas,
       catatan,
       created_at,
-      mata_kuliah (
-        id,
-        nama,
-        kode,
-        aktif
-      ),
-      tugas_foto (
-        id,
-        file_name,
-        file_size,
-        mime_type,
-        storage_path
-      )
+      mata_kuliah!inner ( id, nama, kode, aktif ),
+      tugas_foto ( id )
     `)
+    .eq('mata_kuliah.aktif', true)
     .order('tanggal_tugas', { ascending: false })
     .order('created_at', { ascending: false })
 
-  if (mataKuliahId) {
-    query = query.eq('mata_kuliah_id', mataKuliahId)
-  }
+  if (mataKuliahId) query = query.eq('mata_kuliah_id', mataKuliahId)
+  if (limit) query = query.limit(limit)
 
   const { data, error } = await query
 
@@ -42,18 +32,7 @@ export async function fetchTasks({ limit, mataKuliahId } = {}) {
     return { data: null, error }
   }
 
-  // Safe client-side filter: only show tasks whose related course is active
-  const activeTasks = (data ?? []).filter((item) => {
-    // If course relation exists, it must be aktif === true
-    if (item.mata_kuliah) {
-      return item.mata_kuliah.aktif === true
-    }
-    return false
-  })
-
-  const results = limit ? activeTasks.slice(0, limit) : activeTasks
-
-  return { data: results, error: null }
+  return { data: data ?? [], error: null }
 }
 
 /**
